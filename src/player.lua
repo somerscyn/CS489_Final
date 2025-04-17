@@ -1,3 +1,4 @@
+local Class = require 'libs.hump.class'
 local Player = Class{}
 
 function  Player:init(x, y)
