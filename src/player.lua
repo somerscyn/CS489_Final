@@ -2,14 +2,17 @@ local Class = require 'libs.hump.class'
 local Push = require 'libs.push'
 local Player = Class{}
 local Globals = require 'src.Globals'
+local stagemanager = require 'src.stages.StageManager'
 
-function  Player:init(x, y)
+function  Player:init(x, y, stagemanager)
     self.x = x
     self.y = y
     self.width = .5
     self.height = .5
     self.speed = 300
     self.image = love.graphics.newImage('assets/images/player.png')
+
+    self.stagemanager = stagemanager
 end
 
 

@@ -1,5 +1,10 @@
+local Globals = require 'src.Globals'
 local Push = require 'libs.push'
 local Player = require 'src.Player'
+local StageManager = require 'src.stages.StageManager'
+
+
+
 
 function love.load()
 
@@ -9,8 +14,14 @@ function love.load()
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
 
-    player = Player(400, 300)
+    manager = StageManager()
+    player = Player(400, 300, StageManager)
+    manager:setPlayer(player)
+
+
+    
     titleFont = love.graphics.newFont("assets/fonts/Kaph-Regular.ttf",26)
+    manager:setStage(1) -- set stage 0
 
 end
 
@@ -30,10 +41,6 @@ function love.draw()
 
     if gameState == "start" then
         love.graphics.setColor(1, 1, 1)
-<<<<<<< HEAD
-=======
-        love.graphics.print("Press something to contine", 200, gameHeight/2, 0 , 5,5)
->>>>>>> 073c5e15cd49e4dcaf02b98b5de19b70f5d3350a
         drawStartState()
     end
 

@@ -3,4 +3,4 @@ gameHeight = 720
 gameState = "start"
 debugFlag = false
 windowWidth, windowHeight = love.graphics.getDimensions()
---stagemanager = require 'src.stagemanager'
+manager = require 'src.stages.stagemanagerinstance'
