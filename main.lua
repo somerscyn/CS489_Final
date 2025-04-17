@@ -15,7 +15,7 @@ function love.load()
     love.graphics.setColor(1, 1, 1)
 
     manager = StageManager()
-    player = Player(400, 300, StageManager)
+    player = Player(400, 300, manager)
     manager:setPlayer(player)
 
 

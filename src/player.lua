@@ -4,7 +4,7 @@ local Player = Class{}
 local Globals = require 'src.Globals'
 local stagemanager = require 'src.stages.StageManager'
 
-function  Player:init(x, y, stagemanager)
+function  Player:init(x, y, manager)
     self.x = x
     self.y = y
     self.width = .5
@@ -12,7 +12,7 @@ function  Player:init(x, y, stagemanager)
     self.speed = 300
     self.image = love.graphics.newImage('assets/images/player.png')
 
-    self.stagemanager = stagemanager
+    self.stagemanager = manager
 end
 
 
