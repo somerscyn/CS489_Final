@@ -6,9 +6,9 @@ local Globals = require 'src.Globals'
 function  Player:init(x, y)
     self.x = x
     self.y = y
-    self.width = 16
-    self.height = 16
-    self.speed = 120
+    self.width = .5
+    self.height = .5
+    self.speed = 300
     self.image = love.graphics.newImage('assets/images/player.png')
 end
 
@@ -21,7 +21,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    love.graphics.draw(self.image, self.x, self.y)
+    love.graphics.draw(self.image, self.x, self.y, 0, self.width, self.height)
 end
 
 return Player

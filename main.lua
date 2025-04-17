@@ -13,19 +13,36 @@ function love.load()
 end
 
 function love.update(dt)
+    if gameState == "play" then
+        player:update(dt)
+        -- Update logic for the start state
+    end
+
+
     player:update(dt)
     -- Update logic here
 
 end
 
 function love.draw()
+
+    if gameState == "start" then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print("Press something to contine", 200, gameHeight/2, 0 , 5,5)
+    end
+
     --Push:start()
-
-    player:draw()
-    love.graphics.print("Hello, World!", 400, 300)
-
+    if gameState == "play" then
+        drawPlayState()
+    end
     --Push:finish()
 end 
+
+
+function drawPlayState()
+    love.graphics.setColor(1, 1, 1)
+    player:draw()
+end
 
 function love.keypressed(key)
     if key == "escape" then
