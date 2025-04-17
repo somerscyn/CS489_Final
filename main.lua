@@ -30,12 +30,19 @@ function love.draw()
 
     if gameState == "start" then
         love.graphics.setColor(1, 1, 1)
+<<<<<<< HEAD
+=======
+        love.graphics.print("Press something to contine", 200, gameHeight/2, 0 , 5,5)
+>>>>>>> 073c5e15cd49e4dcaf02b98b5de19b70f5d3350a
         drawStartState()
     end
 
     --Push:start()
     if gameState == "play" then
         drawPlayState()
+    end
+    if gameState == "gameover" then
+        drawGameOverState()
     end
     --Push:finish()
 end 
@@ -72,4 +79,10 @@ function drawPlayState()
     --camera:detach()
 
     --hud:draw()
+end
+
+function drawGameOverState()
+    love.graphics.setColor(1,0,0) -- red
+    love.graphics.printf("Game Over", titleFont,0,20,gameWidth,"center") 
+    love.graphics.printf("Press Enter to Restart",0,100,gameWidth,"center") 
 end
