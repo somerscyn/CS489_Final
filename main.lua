@@ -10,6 +10,8 @@ function love.load()
     love.graphics.setColor(1, 1, 1)
 
     player = Player(400, 300)
+    titleFont = love.graphics.newFont("assets/fonts/Kaph-Regular.ttf",26)
+
 end
 
 function love.update(dt)
@@ -29,6 +31,7 @@ function love.draw()
     if gameState == "start" then
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Press something to contine", 200, gameHeight/2, 0 , 5,5)
+        drawStartState()
     end
 
     --Push:start()
@@ -37,12 +40,6 @@ function love.draw()
     end
     --Push:finish()
 end 
-
-
-function drawPlayState()
-    love.graphics.setColor(1, 1, 1)
-    player:draw()
-end
 
 function love.keypressed(key)
     if key == "escape" then
