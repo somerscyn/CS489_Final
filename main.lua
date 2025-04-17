@@ -9,7 +9,11 @@ function love.load()
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
 
+<<<<<<< HEAD
     player = Player(100, 100)
+=======
+    player = Player(400, 300)
+>>>>>>> 7df29dd5331aef78b5bcb1f486d0dd49455a0fe0
 end
 
 function love.update(dt)
