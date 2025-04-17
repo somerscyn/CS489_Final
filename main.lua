@@ -29,11 +29,8 @@ end
 function love.draw()
 
     if gameState == "start" then
-<<<<<<< HEAD
-=======
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Press something to contine", 200, gameHeight/2, 0 , 5,5)
->>>>>>> b56e64c04b2f65d247ff53c8e31bcd325ff2a50a
         drawStartState()
     end
 
@@ -41,13 +38,12 @@ function love.draw()
     if gameState == "play" then
         drawPlayState()
     end
+    if gameState == "gameover" then
+        drawGameOverState()
+    end
     --Push:finish()
 end 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b56e64c04b2f65d247ff53c8e31bcd325ff2a50a
 function love.keypressed(key)
     if key == "escape" then
         love.event.quit()
@@ -80,4 +76,10 @@ function drawPlayState()
     --camera:detach()
 
     --hud:draw()
+end
+
+function drawGameOverState()
+    love.graphics.setColor(1,0,0) -- red
+    love.graphics.printf("Game Over", titleFont,0,20,gameWidth,"center") 
+    love.graphics.printf("Press Enter to Restart",0,100,gameWidth,"center") 
 end
