@@ -2,6 +2,8 @@ function love.load()
     love.window.setMode(1280, 720, {resizable = true})
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
+
+    player = Player(400, 300)
 end
 
 function love.update(dt)
