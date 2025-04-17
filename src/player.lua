@@ -1,4 +1,4 @@
-local player = Class{}
+local Player = Class{}
 
 function  Player:init(x, y)
     self.x = x
@@ -6,7 +6,7 @@ function  Player:init(x, y)
     self.width = 16
     self.height = 16
     self.speed = 20
-    --self.image = love.graphics.newImage('assets/player.png')
+    self.image = love.graphics.newImage('assets/images/player.png')
 end
 
 
