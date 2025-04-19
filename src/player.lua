@@ -1,6 +1,5 @@
 local Class = require 'libs.hump.class'
 local Push = require 'libs.push'
-local Player = Class{}
 local Globals = require 'src.Globals'
 local stagemanager = require 'src.stages.StageManager'
 local Anim8 = require "libs.anim8"
@@ -22,7 +21,9 @@ local runAnim = Anim8.newAnimation( runGrid('1-16',1), 0.1)
 
 
 
-function  Player:init(x, y, manager)
+local Player = Class{}
+
+function Player:init(x, y, manager)
     self.x = x
     self.y = y
     self.scale = .25
@@ -54,12 +55,14 @@ function Player:update(dt)
         if love.keyboard.isDown("a") then nextX = nextX - self.speed * dt end
         if love.keyboard.isDown("d") then nextX = nextX + self.speed * dt end
         -- Clamp to stage boundaries
-        if nextX < stageX then nextX = stageX end
-        if nextY < stageY then nextY = stageY end
+        if nextX < stageX+5 then nextX = stageX+5 end
+        if nextY < stageY+5 then nextY = stageY+5 end
 
-        if nextX + self.width > stageWidth then nextX = stageWidth - self.width end
-        print(stageWidth, stageHeight)
-        if nextY + self.height > stageHeight then nextY = stageHeight - self.height end
+        stageRight = stageX + stageWidth - 20
+        stageBottom = stageY + stageHeight -20
+
+        if nextX + self.width > stageWidth +stageX then nextX = stageRight - self.width end
+        if nextY + self.height > stageHeight + stageY then nextY = stageBottom - self.height  end
     
         self.x = nextX
         self.y = nextY
@@ -68,10 +71,8 @@ end
 function Player:draw()
     love.graphics.draw(self.stageImg, stageX, stageY)
     bg = love.graphics.newImage('assets/images/Background1.jpg')
-    --love.graphics.draw(bg)
-   -- love.graphics.draw(self.stageImg)
+
     love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
-    --code to draw background image
 
 end
 
