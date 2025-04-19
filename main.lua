@@ -31,10 +31,6 @@ function love.update(dt)
         -- Update logic for the start state
     end
 
-
-    player:update(dt)
-    -- Update logic here
-
 end
 
 function love.draw()
