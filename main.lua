@@ -3,9 +3,6 @@ local Push = require 'libs.push'
 local Player = require 'src.Player'
 local StageManager = require 'src.stages.StageManager'
 
-
-
-
 function love.load()
 
     love.window.setTitle("Retro Musashi")
