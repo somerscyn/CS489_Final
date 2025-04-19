@@ -3,6 +3,10 @@ local Push = require 'libs.push'
 local Player = require 'src.Player'
 local StageManager = require 'src.stages.StageManager'
 local Slime = require 'src.Slime'
+local Green = require 'src.Green'
+local Class = require "libs.hump.class"
+local FloatText = require "src.FloatText"
+
 
 function love.load()
 
@@ -12,23 +16,24 @@ function love.load()
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
 
-    --manager = StageManager()
     player = Player(400, 300, manager)
-    slime = Slime(400, 300, manager)
-    --manager:setPlayer(player)
+    slime = Slime(400,300)
+    green = Green(500, 600)
+    floatText = FloatText("Good luck!", 200, 300)
+    floatText:tween(300)
+    floatText:tween(-100)
 
-
-    
     titleFont = love.graphics.newFont("assets/fonts/Kaph-Regular.ttf",26)
-   -- manager:setStage(1) -- set stage 0
-
 end
 
 function love.update(dt)
     if gameState == "play" then
         player:update(dt)
-        -- Update logic for the start state
+        slime:update(dt)
+        green:update(dt)
+        floatText:update(dt)
     end
+    
 
 end
 
@@ -60,28 +65,20 @@ end
 
 function drawStartState()
     love.graphics.setColor(0.3,0.3,0.3) -- dark gray
-    --stagemanager:currentStage():drawBg()
-    --stagemanager:currentStage():draw() -- draw Stage zero
     love.graphics.setColor(1,1,0) -- Yellow
     love.graphics.printf("Retro Musashi", titleFont,0,200,gameWidth,"center") 
     love.graphics.printf("Press Enter to Start",0,270,gameWidth,"center") 
+    floatText:draw()
         
 end
 
 function drawPlayState()
-
-    --stagemanager:currentStage():drawBg()
-
-    --camera:attach()
-
-   -- stagemanager:currentStage():draw()
     love.graphics.setColor(1,1,1) -- white
     player:draw()
     slime:draw()
+    green:draw()
+    floatText:draw()
     
-    --camera:detach()
-
-    --hud:draw()
 end
 
 function drawGameOverState()
