@@ -2,6 +2,7 @@ local Globals = require 'src.Globals'
 local Push = require 'libs.push'
 local Player = require 'src.Player'
 local StageManager = require 'src.stages.StageManager'
+local Slime = require 'src.Slime'
 
 function love.load()
 
@@ -13,6 +14,7 @@ function love.load()
 
     --manager = StageManager()
     player = Player(400, 300, manager)
+    slime = Slime(400, 300, manager)
     --manager:setPlayer(player)
 
 
@@ -31,6 +33,7 @@ function love.update(dt)
 
     player:update(dt)
     -- Update logic here
+    slime:update(dt)
 
 end
 
@@ -79,6 +82,7 @@ function drawPlayState()
    -- stagemanager:currentStage():draw()
     love.graphics.setColor(1,1,1) -- white
     player:draw()
+    slime:draw()
     
     --camera:detach()
 
