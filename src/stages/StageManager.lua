@@ -6,58 +6,24 @@ local Stage = require "src.stages.Stage"
 
 local StageManager = Class{}
 function StageManager:init()
-    self.createStage = {} -- stage creation function list
-    self.index = 1 -- current stage index
-    self.current = nil -- current instance of the stage
-    self.player = nil -- reference to the player
-    self.camera = nil -- reference to camera
+    self.stages = {}
+    self.currentStage = nil
+    self.currentStageIndex = 1
 end
 
-function StageManager:currentStage()
-    return self.current
+function StageManager:addStage(stage)
+    table.insert(self.stages, stage)
 end
 
-function StageManager:setPlayer(player)
-    self.player = player
+function StageManager:draw()
+    self.stages[self.currentStageIndex]:draw()
 end
 
-function StageManager:setCamera(camera)
-    self.camera = camera
+function StageManager:update(dt)
+    self.stages[self.currentStageIndex]:update(dt)
 end
 
-function StageManager:nextStage()
-    self:setStage(self.index+1)
+function StageManager:NextStage()
+    self.currentStageIndex = self.currentStageIndex + 1
 end
-
-function StageManager:prevStage()
-    self:setStage(self.index-1)
-end
-
-function StageManager:setStage(index)
-    if self:currentStage() then
-        self:currentStage():stopMusic() -- stops music from previous stage
-    end
-
-    self.index = index
-    print(self.index)
-    if self.createStage[self.index] then
-        self.current = self.createStage[self.index]() -- calls createS()
-    else
-        error("Stage creation function not found for index: " .. tostring(self.index))
-    end
-    -- self.current now has an instance of the stage
-
-    self.player.x = self.current.initialPlayerX
-    self.player.y = self.current.initialPlayerY
-     
-    self.camera:setBounds(0, 0, self:currentStage():getWidth(), self:currentStage():getHeight())
-    self:currentStage():playMusic()
-    return self:currentStage()
-end
-
-function StageManager:exitStage()
-    -- setup animation/tweens for exiting stage
-end
-
-
 return StageManager

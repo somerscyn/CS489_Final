@@ -3,6 +3,10 @@ local Push = require 'libs.push'
 local Player = require 'src.Objects.Player'
 local StageManager = require 'src.stages.StageManager'
 local Slime = require 'src.Slime'
+local Stage = require 'src.stages.Stage'
+local GameObject = require 'src.Objects.GameObjects' 
+local S0 = require 'src.stages.stageData.S0'
+
 
 function love.load()
 
@@ -11,11 +15,17 @@ function love.load()
     love.window.setMode(1280, 720, {resizable = true})
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
-
-    --manager = StageManager()
+    
     player = Player(400, 300, manager)
     slime = Slime(400, 300, manager)
+
+    manager = StageManager()
+    testStage = Stage(S0.background, S0.objects, 0)
+    manager:addStage(testStage)
+
+
     --manager:setPlayer(player)
+
 
 
     
@@ -27,8 +37,10 @@ end
 function love.update(dt)
     if gameState == "play" then
         player:update(dt)
-        -- Update logic for the start state
+        manager:update(dt)
+        --Update logic for the start state
     end
+
 
 end
 
@@ -76,8 +88,11 @@ function drawPlayState()
 
    -- stagemanager:currentStage():draw()
     love.graphics.setColor(1,1,1) -- white
-    player:draw()
+    
+
+    manager:draw()
     slime:draw()
+    player:draw()
     
     --camera:detach()
 
