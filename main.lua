@@ -6,7 +6,7 @@ local Slime = require 'src.Slime'
 local Green = require 'src.Green'
 local Class = require "libs.hump.class"
 local FloatText = require "src.FloatText"
-
+local Sounds = require "src.Sounds"
 
 function love.load()
 
@@ -47,6 +47,8 @@ function love.draw()
     --Push:start()
     if gameState == "play" then
         drawPlayState()
+        Sounds["playStateMusic"]:play()
+        Sounds["playStateMusic"]:setLooping(true)
     end
     if gameState == "gameover" then
         drawGameOverState()
@@ -84,5 +86,6 @@ end
 function drawGameOverState()
     love.graphics.setColor(1,0,0) -- red
     love.graphics.printf("Game Over", titleFont,0,20,gameWidth,"center") 
-    love.graphics.printf("Press Enter to Restart",0,100,gameWidth,"center") 
+    love.graphics.printf("Press Enter to Restart",0,100,gameWidth,"center")
+    
 end
