@@ -3,7 +3,7 @@ local Push = require 'libs.push'
 local Globals = require 'src.Globals'
 local stagemanager = require 'src.stages.StageManager'
 local Anim8 = require "libs.anim8"
---local Sounds = require "src.game.Sounds"
+--local Sounds = require "src.Sounds"
 local Class = require "libs.hump.class"
 local Tween = require "libs.tween"
 
@@ -18,7 +18,6 @@ local runSprite = love.graphics.newImage(
 local runGrid = Anim8.newGrid(64,64,
     runSprite:getWidth(),runSprite:getHeight())
 local runAnim = Anim8.newAnimation( runGrid('1-16',1), 0.1)
-
 
 
 local Player = Class{}

@@ -5,4 +5,3 @@ debugFlag = false
 stageX = gameWidth *.2
 stageY = 50
 windowWidth, windowHeight = love.graphics.getDimensions()
-manager = require 'src.stages.stagemanagerinstance'

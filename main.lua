@@ -1,6 +1,6 @@
 local Globals = require 'src.Globals'
 local Push = require 'libs.push'
-local Player = require 'src.Player'
+local Player = require 'src.Objects.Player'
 local StageManager = require 'src.stages.StageManager'
 local Slime = require 'src.Slime'
 local Green = require 'src.Green'
