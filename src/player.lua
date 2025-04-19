@@ -11,6 +11,7 @@ function  Player:init(x, y, manager)
     self.height = .5
     self.speed = 300
     self.image = love.graphics.newImage('assets/images/player.png')
+    self.stageImg = love.graphics.newImage('assets/images/MapS0.png')
 
     self.stagemanager = manager
 end
@@ -24,7 +25,10 @@ function Player:update(dt)
 end
 
 function Player:draw()
+    love.graphics.draw(self.stageImg)
     love.graphics.draw(self.image, self.x, self.y, 0, self.width, self.height)
+    --code to draw background image
+
 end
 
 return Player

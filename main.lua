@@ -14,14 +14,14 @@ function love.load()
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
 
-    manager = StageManager()
+    --manager = StageManager()
     player = Player(400, 300, manager)
-    manager:setPlayer(player)
+    --manager:setPlayer(player)
 
 
     
     titleFont = love.graphics.newFont("assets/fonts/Kaph-Regular.ttf",26)
-    manager:setStage(1) -- set stage 0
+   -- manager:setStage(1) -- set stage 0
 
 end
 
