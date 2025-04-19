@@ -20,7 +20,7 @@ end
 
 
 function Player:update(dt)
-    if self.x > 0 and self.x < Globals.gameWidth - self.width then
+    if self.x > 0 and self.x < gameWidth - self.width then
         if love.keyboard.isDown("w") then self.y = self.y - self.speed * dt end
         if love.keyboard.isDown("s") then self.y = self.y + self.speed * dt end
         if love.keyboard.isDown("a") then self.x = self.x - self.speed * dt end
@@ -29,14 +29,10 @@ function Player:update(dt)
 end
 
 function Player:draw()
-<<<<<<< HEAD
-    love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
-=======
     love.graphics.draw(self.stageImg)
-    love.graphics.draw(self.image, self.x, self.y, 0, self.width, self.height)
+    love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
     --code to draw background image
 
->>>>>>> 29ec8a14eb1630c27dd8887c5b5b59ac53f74fbf
 end
 
 return Player
