@@ -25,6 +25,8 @@ function Player:update(dt)
 end
 
 function Player:draw()
+    bg = love.graphics.newImage('assets/images/Background1.jpg')
+    love.graphics.draw(bg)
     love.graphics.draw(self.stageImg)
     love.graphics.draw(self.image, self.x, self.y, 0, self.width, self.height)
     --code to draw background image
