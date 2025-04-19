@@ -16,7 +16,7 @@ function love.load()
 
     --manager = StageManager()
     player = Player(400, 300, manager)
-   -- manager:setPlayer(player)
+    --manager:setPlayer(player)
 
 
     
