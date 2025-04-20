@@ -2,12 +2,12 @@ local Globals = require 'src.Globals'
 local Push = require 'libs.push'
 local Player = require 'src.Objects.Player'
 local StageManager = require 'src.stages.StageManager'
-local Slime = require 'src.Slime'
+local Slime = require 'src.Objects.mobs.Slime'
 local Stage = require 'src.stages.Stage'
 local GameObject = require 'src.Objects.GameObjects' 
 local S0 = require 'src.stages.stageData.S0'
 
-local Green = require 'src.Green'
+local Green = require 'src.Objects.mobs.Green'
 local Class = require "libs.hump.class"
 local FloatText = require "src.FloatText"
 local Sounds = require "src.Sounds"
@@ -20,12 +20,15 @@ function love.load()
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
     
-    player = Player(400, 300, manager)
-    slime = Slime(400, 300, manager)
 
-    manager = StageManager()
+
+    manager = StageManager()    
+    manager:GenerateFloor(7,7,6)
+    player = Player(500, 300, manager)
+    --slime = Slime(400, 300, manager)
+
     testStage = Stage(S0.background, S0.objects, 0)
-    manager:addStage(testStage)
+    --manager:addStage(testStage)
     
     green = Green(500, 600)
     floatText = FloatText("Good luck!", 200, 300)
@@ -39,7 +42,7 @@ function love.update(dt)
     if gameState == "play" then
         manager:update(dt)
         --Update logic for the start state
-        slime:update(dt)
+        --slime:update(dt)
         green:update(dt)
         floatText:update(dt)
         player:update(dt)
@@ -75,6 +78,10 @@ function love.keypressed(key)
     if key and gameState == "start" then
         gameState = "play"
     end
+    
+    if key == "-" then
+        debugFlag = not debugFlag
+    end
 end
 
 function drawStartState()
@@ -91,7 +98,7 @@ function drawPlayState()
     
 
     manager:draw()
-    slime:draw()
+    --slime:draw()
     player:draw()
     green:draw()
     floatText:draw()

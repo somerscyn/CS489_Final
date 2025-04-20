@@ -4,4 +4,6 @@ gameState = "start"
 debugFlag = false
 stageX = gameWidth *.2
 stageY = 50
+stageWidth = 640
+stageHeight = 640
 windowWidth, windowHeight = love.graphics.getDimensions()

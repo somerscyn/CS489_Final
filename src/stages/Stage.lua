@@ -14,11 +14,18 @@ function Stage:init(background, objects, music)
     self.music = nil -- this stage music 
     self.objects = objects 
 
+    self.gridX = nil
+    self.gridY = nil
+    self.roomType = nil
+    self.connections = nil
+
 end
 
 function Stage:update(dt)
     for _, obj in ipairs(self.objects) do
-        if obj.update then
+        if obj.update and obj.type == "mob"then
+            obj:update(dt, player)
+        elseif obj.update then
             obj:update(dt)
         end
     end
