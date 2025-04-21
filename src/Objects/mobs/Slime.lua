@@ -4,6 +4,7 @@ local Timer = require "libs.hump.timer"
 --local Hbox = require "src.game.Hbox"
 --local Sounds = require "src.game.Sounds"
 local GameObject = require "src.Objects.GameObjects"
+local Explosion = require"src.src.Explosion"
 
 local slimeSprite = love.graphics.newImage("assets/images/slime.png")
 local slimeGrid = Anim8.newGrid(16, 32, slimeSprite:getWidth(), slimeSprite:getHeight())
@@ -83,7 +84,12 @@ function Slime:chasePlayer(playerX, playerY, dt)
     end
 end
 
-
+function Slime:createExplosion()
+    local exp = Explosion()
+    exp:setColor(1,0,0)
+    exp:trigger(self.x, self.y)
+    --table.insert(self.explosions, exp) -- add exp to our array
+end
 
 return Slime
 
