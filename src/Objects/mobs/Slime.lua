@@ -23,7 +23,7 @@ function Slime:init(x,y, width, height)
     self.sprites = {}
 
     self.speed = 200
-    self.health = 1
+    self.health = 20
     self.frames = slimeFrames
 
     self.type = "mob"
@@ -66,6 +66,10 @@ function Slime:draw()
         love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
         love.graphics.setColor(1, 1, 1, 1)
     end
+end
+
+function Slime:isDead()
+    return self.health <= 0
 end
 
 function Slime:chasePlayer(playerX, playerY, dt)

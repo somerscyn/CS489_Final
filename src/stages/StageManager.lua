@@ -35,6 +35,10 @@ end
 
 function StageManager:GenerateFloor(width, height, maxRooms)
     -- Create a grid to represent our floor layout
+--010  
+--011 
+--010
+--000
     self.roomGrid = {}
     for x = 1, width do
         self.roomGrid[x] = {}
