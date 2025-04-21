@@ -8,17 +8,8 @@ local Class = require "libs.hump.class"
 local Tween = require "libs.tween"
 local obj = require 'src.Objects.GameObjects'
 
-local idleSprite = love.graphics.newImage(
-    "assets/samurai/sprites/IDLE.png")
-local idleGrid = Anim8.newGrid(64,64,
-    idleSprite:getWidth(),idleSprite:getHeight())
-local idleAnim = Anim8.newAnimation(idleGrid('1-10',1), 0.3)
 
-local runSprite = love.graphics.newImage(
-    "assets/samurai/sprites/RUN.png")
-local runGrid = Anim8.newGrid(64,64,
-    runSprite:getWidth(),runSprite:getHeight())
-local runAnim = Anim8.newAnimation( runGrid('1-16',1), 0.1)
+
 
 
 local Player = Class{}
@@ -26,23 +17,46 @@ local Player = Class{}
 function Player:init(x, y, manager)
     self.x = x
     self.y = y
-    self.scale = .25
+    self.scale = 1
     self.speed = 300
 
     self.health = 6
 
+    self.attack = 10
+
     self.image = love.graphics.newImage('assets/images/player.png')
-    self.width = self.image:getWidth() * self.scale
-    self.height = self.image:getHeight() * self.scale
+    self.width = 50 * self.scale
+    self.height = 50 * self.scale
 
     self.stageImg = love.graphics.newImage('assets/images/MapS0.png')
 
 
     self.stagemanager = manager
+    
+----Animation 
+    self.sprites = {
+        idle = love.graphics.newImage('assets/jeymarSam/samurai-idle-down.png'),
+        walkUp = love.graphics.newImage('assets/jeymarSam/samurai-walk-up.png'),
+        walkDown = love.graphics.newImage('assets/jeymarSam/samurai-walk-down.png'),
+    }
+    
+    -- Build Anim8 grids and animations
+    local frameW, frameH = 50, 50 
 
-    self.animations = {}
-    self.sprites = {}
-    self:createAnimations()
+    self.grids = {
+        idle = Anim8.newGrid(frameW, frameH, self.sprites.idle:getWidth(), self.sprites.idle:getHeight()),
+        walkUp = Anim8.newGrid(frameW, frameH, self.sprites.walkUp:getWidth(), self.sprites.walkUp:getHeight()),
+        walkDown = Anim8.newGrid(frameW, frameH, self.sprites.walkDown:getWidth(), self.sprites.walkDown:getHeight()),
+    }
+    
+    self.animations = {
+        idle = Anim8.newAnimation(self.grids.idle('1-4', 1), 0.2),
+        walkUp = Anim8.newAnimation(self.grids.walkUp('1-7', 1), 0.15),
+        walkDown = Anim8.newAnimation(self.grids.walkDown('1-8', 1), 0.15),
+    }
+    
+    self.currentKey = "idle"
+    self.currentAnimation = self.animations[self.currentKey]
 end
 
 
@@ -51,10 +65,25 @@ function Player:update(dt)
         local nextX = self.x
         local nextY = self.y
 
-        if love.keyboard.isDown("w") then nextY = nextY - self.speed * dt end
-        if love.keyboard.isDown("s") then nextY = nextY + self.speed * dt end
+        local moving = false
+        
+
+        if love.keyboard.isDown("w") then 
+            nextY = nextY - self.speed * dt
+            self.currentKey = "walkUp"
+            moving = true
+        end
+        if love.keyboard.isDown("s") then 
+            nextY = nextY + self.speed * dt 
+            self.currentKey = "walkDown"
+            moving = true
+        end
         if love.keyboard.isDown("a") then nextX = nextX - self.speed * dt end
         if love.keyboard.isDown("d") then nextX = nextX + self.speed * dt end
+
+        if not moving then
+            self.currentKey = "idle"
+        end
         -- Clamp to stage boundaries
         if nextX < stageX+5 then nextX = stageX+5 end
         if nextY < stageY+16 then nextY = stageY+16 end
@@ -83,6 +112,16 @@ function Player:update(dt)
                 -- Collision detected, stop movement
                 collided = true
                 break
+
+            elseif obj:checkCollision(nextX, nextY, self.width, self.height) and obj.type == "mob" then
+                if love.keyreleased("k") then
+                    obj.health = obj.health - self.attack
+                    if obj.health <= 0 then
+                        -- Remove the object from the stage
+                        table.remove(objects, _)
+                    end
+                end
+                break
             end
         end
         --print(self.x, self.y, self.width, self.height)
@@ -92,31 +131,24 @@ function Player:update(dt)
             self.y = nextY
         end
 
-
+        self.currentAnimation:update(dt)
 end
 
 function Player:draw()
     --love.graphics.draw(self.stageImg, stageX, stageY)
-    love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
+    --love.graphics.draw(self.image, self.x, self.y, 0, self.scale, self.scale)
+    self.currentAnimation:draw(self.sprites[self.currentKey], self.x, self.y, 0, self.scale, self.scale)
+
+
     if debugFlag then
         love.graphics.setColor(1, 0, 0, 0.5) -- red semi-transparent
         love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
         love.graphics.setColor(1, 1, 1, 1)
+
     end
 
 end
 
-function Player:createAnimations()
-    self.animations["idle"] = idleAnim
-    self.animations["run"] = runAnim
-    self.animations["jump"] = jumpAnim
-    self.animations["attack1"] = attack1Anim
-    self.animations["attack2"] = attack2Anim    
-    self.animations["hit"] = hitAnim
-    self.animations["die"] = dieAnim
 
-    -- Set the default animation to idle
-    self.currentAnimation = "idle"
-end
 
 return Player
