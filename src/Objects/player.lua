@@ -19,6 +19,8 @@ function Player:init(x, y, manager)
     self.y = y
     self.scale = 1
     self.speed = 300
+    
+    self.padding = 10
 
     self.health = 6
 
@@ -107,6 +109,7 @@ function Player:update(dt)
         local currentStage = manager:CurrentStage()
         local objects = currentStage.objects
         local collided = false
+        hb = self:getHurtBox()
         for _, obj in ipairs(objects) do
             if obj:checkCollision(nextX, nextY, self.width, self.height) and obj.type == "obstacle" then
                 -- Collision detected, stop movement
@@ -118,7 +121,10 @@ function Player:update(dt)
                     obj.health = obj.health - self.attack
                     print(obj.health)
                 end
-                break
+            end
+            if obj:checkCollision(hb.x, hb.y, hb.width, hb.height) and obj.type == "mob" then
+                -- Collision detected, stop movement
+                self.health = self.health - 0.5
             end
         end
         --print(self.x, self.y, self.width, self.height)
@@ -127,8 +133,17 @@ function Player:update(dt)
             self.x = nextX
             self.y = nextY
         end
-
         self.currentAnimation:update(dt)
+end
+
+function Player:getHurtBox()
+    return{
+        x = self.x + self.padding,
+        y = self.y + self.padding,
+        width = self.width - self.padding * 2,
+        height = self.height - self.padding * 2
+    }
+
 end
 
 function Player:draw()
@@ -139,7 +154,7 @@ function Player:draw()
 
     if debugFlag then
         love.graphics.setColor(1, 0, 0, 0.5) -- red semi-transparent
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+        love.graphics.rectangle("line", self.x + 10, self.y+10, self.width - 20, self.height - 20)
         love.graphics.setColor(1, 1, 1, 1)
 
     end

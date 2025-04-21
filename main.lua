@@ -11,6 +11,8 @@ local Green = require 'src.Objects.mobs.Green'
 local Class = require "libs.hump.class"
 local FloatText = require "src.FloatText"
 local Sounds = require "src.Sounds"
+local HUD = require "src.HUD"
+
 
 function love.load()
 
@@ -25,6 +27,7 @@ function love.load()
     manager = StageManager()    
     manager:GenerateFloor(7,7,6)
     player = Player(500, 300, manager)
+    hud = HUD(player)
     --slime = Slime(400, 300, manager)
 
     testStage = Stage(S0.background, S0.objects, 0)
@@ -46,6 +49,7 @@ function love.update(dt)
         green:update(dt)
         floatText:update(dt)
         player:update(dt)
+        hud:update(dt)
     end
     
 
@@ -102,6 +106,7 @@ function drawPlayState()
     player:draw()
     green:draw()
     floatText:draw()
+    hud:draw()
     
 end
 
