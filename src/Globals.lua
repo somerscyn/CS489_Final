@@ -6,4 +6,5 @@ stageX = gameWidth *.2
 stageY = 50
 stageWidth = 640
 stageHeight = 640
+explosions = {}
 windowWidth, windowHeight = love.graphics.getDimensions()

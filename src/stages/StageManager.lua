@@ -22,7 +22,6 @@ end
 
 function StageManager:update(dt)
     self.stages[self.currentStageIndex]:update(dt)
-    print (self.roomGrid)
 end
 
 function StageManager:NextStage()

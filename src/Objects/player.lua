@@ -114,12 +114,9 @@ function Player:update(dt)
                 break
 
             elseif obj:checkCollision(nextX, nextY, self.width, self.height) and obj.type == "mob" then
-                if love.keyreleased("k") then
+                if love.keyboard.isDown("k") then
                     obj.health = obj.health - self.attack
-                    if obj.health <= 0 then
-                        -- Remove the object from the stage
-                        table.remove(objects, _)
-                    end
+                    print(obj.health)
                 end
                 break
             end

@@ -25,8 +25,17 @@ function Stage:update(dt)
     for _, obj in ipairs(self.objects) do
         if obj.update and obj.type == "mob"then
             obj:update(dt, player)
+            if obj.health <= 0 then
+                table.remove(self.objects, _)
+            end
         elseif obj.update then
             obj:update(dt)
+        end
+    end
+    -- explosions update
+    for _, exp in ipairs(explosions) do
+        if exp.update then
+            exp:update(dt)
         end
     end
 end
@@ -38,6 +47,9 @@ function Stage:draw()
         if obj.draw then
             obj:draw()
         end
+    end
+    for _, exp in ipairs(explosions) do
+        exp:draw()
     end
 end
 

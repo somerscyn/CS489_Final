@@ -11,6 +11,7 @@ function Explosion:init()
     self.particleSystem:setLinearAcceleration(0, 0, 0, 0) -- No gravity
     self.particleSystem:setEmissionArea("uniform",20,20,0,true)
     self.particleSystem:setColors(1, 1, 1, 1, 0, 0, 0, 0) 
+    print("Explosion:init called")
     -- White fading to transparent(r, g, b, a, r, g, b, a)    
     
 end
@@ -23,21 +24,23 @@ end
 function Explosion:trigger(x,y)
     if x and y then -- if x & y not nil, set then now
         self.particleSystem:setPosition(x, y)
-        self.particleSystem:emit(30) -- Emit 30 particles
+        self.particleSystem:emit(100) -- Emit 30 particles
     end
 end
 
 function Explosion:update(dt)
-    self.particleSystem:update(dt)
+   self.particleSystem:update(dt)
+    -- check if the particles are still running
 end
 
-function Explosion:draw(x,y)
+function Explosion:draw()
     -- if x & y are nil, it will use the trigger x,y 
-    love.graphics.draw(self.particleSystem, x, y)
+    love.graphics.draw(self.particleSystem)
 end
 
 function Explosion:isActive() 
     -- returns true if the particles are still running
+    print(self.particleSystem:getCount())
     return self.particleSystem:getCount() > 0
 end
 

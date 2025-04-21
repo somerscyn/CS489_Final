@@ -4,7 +4,8 @@ local Timer = require "libs.hump.timer"
 --local Hbox = require "src.game.Hbox"
 --local Sounds = require "src.game.Sounds"
 local GameObject = require "src.Objects.GameObjects"
-local Explosion = require"src.src.Explosion"
+local Explosion = require"src.Explosion"
+local Globals = require 'src.Globals'
 
 local slimeSprite = love.graphics.newImage("assets/images/slime.png")
 local slimeGrid = Anim8.newGrid(16, 32, slimeSprite:getWidth(), slimeSprite:getHeight())
@@ -15,9 +16,11 @@ local slimeAnim = Anim8.newAnimation(slimeFrames, 0.1)
 
 local Slime = Class{__includes = GameObject}
 
+
 function Slime:init(x,y, width, height)
 
     -- hard coded values for collision box... not quite sure why 48 and 32 work
+    
     GameObject.init(self, x, y, 48, 32)
     self.animations = {}
     self.sprites = {}
@@ -41,9 +44,13 @@ function Slime:update(dt, player)
 
 
     local frame = self.animations.slime.position
-    print(frame)
     if player and frame > 7 and frame < 11 then
         self:chasePlayer(player.x, player.y, dt)
+    end
+
+    if self:isDead() then
+        self:createExplosion()
+        --self:remove() -- remove the slime from the game
     end
 end
 
@@ -92,6 +99,8 @@ function Slime:createExplosion()
     local exp = Explosion()
     exp:setColor(1,0,0)
     exp:trigger(self.x, self.y)
+    print("Explosion triggered at: ", self.x, self.y)
+    table.insert(explosions, exp) -- add exp to our array
     --table.insert(self.explosions, exp) -- add exp to our array
 end
 
