@@ -17,12 +17,9 @@ local HUD = require "src.HUD"
 function love.load()
 
     love.window.setTitle("Retro Musashi")
-
     love.window.setMode(1280, 720, {resizable = true})
     love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
     love.graphics.setColor(1, 1, 1)
-    
-
 
     manager = StageManager()    
     manager:GenerateFloor(7,7,6)
@@ -51,8 +48,9 @@ function love.update(dt)
         player:update(dt)
         hud:update(dt)
     end
-    
-
+    if player.health <= 0 then
+        gameState = "gameover"
+    end
 
 end
 
@@ -70,6 +68,8 @@ function love.draw()
         Sounds["playStateMusic"]:setLooping(true)
     end
     if gameState == "gameover" then
+        Sounds["ominous"]:play()
+        Sounds["playStateMusic"]:stop()
         drawGameOverState()
     end
     --Push:finish()
@@ -82,7 +82,14 @@ function love.keypressed(key)
     if key and gameState == "start" then
         gameState = "play"
     end
-    
+    if key == "return" and gameState == "gameover" then
+        gameState = "start"
+        player.health = 100
+        player.x = 500
+        player.y = 300
+        player.speed = 200
+        player.currentAnimation:reset()
+    end
     if key == "-" then
         debugFlag = not debugFlag
     end
@@ -114,5 +121,4 @@ function drawGameOverState()
     love.graphics.setColor(1,0,0) -- red
     love.graphics.printf("Game Over", titleFont,0,20,gameWidth,"center") 
     love.graphics.printf("Press Enter to Restart",0,100,gameWidth,"center")
-    
 end
